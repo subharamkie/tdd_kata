@@ -21,6 +21,7 @@ export function convertDecToRoman(num: number): string | undefined {
 
   if (num > 3000) throw new Error("Number has to be less than 3000");
   if (!Number.isInteger(num)) throw new Error("Number has to be an integer");
+  if (num === 0) throw new Error("Romans did not know 0");
 
   if (orderedLookupMap.has(num)) {
     //return the number from the map

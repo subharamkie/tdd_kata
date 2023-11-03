@@ -2,6 +2,7 @@ import { convertDecToRoman } from "../src/dec2roman";
 
 describe("Test convert to roman function", () => {
   it.each([
+    //Arrange
     [18, "XVIII"],
     [19, "XIX"],
     [20, "XX"],
@@ -21,11 +22,13 @@ describe("Test convert to roman function", () => {
     [999, "CMXCIX"],
     [1999, "MCMXCIX"],
   ])("should return Roman numeral for %i", (x, result) => {
+    //Act & assert
     expect(convertDecToRoman(x)).toBe(result);
   });
 });
 describe("Checking wrong input to dec2Roman function", () => {
   it("Should throw error for value > 3000", () => {
+    //Arrange, act & assert error
     expect(() => convertDecToRoman(3214)).toThrow(
       "Number has to be less than 3000"
     );
@@ -37,5 +40,10 @@ describe("Checking float value input ", () => {
     expect(() => convertDecToRoman(3.14)).toThrow(
       "Number has to be an integer"
     );
+  });
+});
+describe("Checking zero ", () => {
+  it("Should throw error for zero", () => {
+    expect(() => convertDecToRoman(0)).toThrow("Romans did not know 0");
   });
 });
