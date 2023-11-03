@@ -4,6 +4,7 @@ describe("Convert Roman number to Decimal", () => {
     ["I", 1],
     ["V", 5],
     ["II", 2],
+    ["IV", 4],
   ])("should return Decimal for %i", (x, result) => {
     expect(convertRomanToDecimal(x)).toBe(result);
   });
