@@ -1,4 +1,3 @@
-import { lookup } from "dns";
 const orderedLookupMap = new Map<number, string>();
 orderedLookupMap.set(1000, "M");
 orderedLookupMap.set(900, "CM");
@@ -21,6 +20,7 @@ export function convertDecToRoman(num: number): string | undefined {
   let romanNumeral: string | undefined = "";
 
   if (orderedLookupMap.has(num)) {
+    //return the number from the map
     romanNumeral = orderedLookupMap.get(num);
     return romanNumeral;
   } else {
@@ -30,9 +30,8 @@ export function convertDecToRoman(num: number): string | undefined {
       appendNine = true;
     }
     remainder = num;
-    //iterate through the object, divide by each one
+    //iterate through the object, divide by each key
     for (const [key, value] of orderedLookupMap) {
-      //divide number by each key
       if (remainder >= key) {
         quotient = Math.floor(remainder / key);
         remainder = Math.floor(remainder % key);
@@ -43,7 +42,6 @@ export function convertDecToRoman(num: number): string | undefined {
         }
         romanNumeral += populateRomanString(
           quotient,
-          remainder,
           currentKeyToGetLetter,
           pad
         );
@@ -59,7 +57,6 @@ export function convertDecToRoman(num: number): string | undefined {
 }
 function populateRomanString(
   num: number,
-  diff: number,
   keyForMap: number,
   paddingLetter: string
 ): string {

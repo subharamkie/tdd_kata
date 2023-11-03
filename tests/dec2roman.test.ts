@@ -19,6 +19,7 @@ describe("Test convert to roman function", () => {
     [2018, "MMXVIII"],
     [367, "CCCLXVII"],
     [999, "CMXCIX"],
+    [1999, "MCMXCIX"],
   ])("should return Roman numeral for %i", (x, result) => {
     expect(convertDecToRoman(x)).toBe(result);
   });
