@@ -19,11 +19,13 @@ export function convertDecToRoman(num:number):string|undefined{
     let pad:string|undefined = '';
     let romanNumeral:string|undefined = ''; 
     
+    console.log("Num to convert:"+num);
     if(orderedLookupMap.has(num)){
         romanNumeral= orderedLookupMap.get(num) ;
         return romanNumeral;
     } else { 
         //last digit not 9
+
         if(Math.floor(num%10) === 9) {
             num = num-9;
             appendNine = true;
@@ -38,13 +40,13 @@ export function convertDecToRoman(num:number):string|undefined{
                 currentKeyToGetLetter = key;
                 pad = orderedLookupMap.get(closestHigherNum); // should never be undefined
                 if(!pad){pad = '';}
-                console.log('quotient b4:'+quotient);
                 romanNumeral += populateRomanString(quotient,remainder,currentKeyToGetLetter,pad);
             }
             closestHigherNum = key;//store the closest higher number for numbers like 4,9
         };
         if(appendNine){
             romanNumeral += APPEND_NINE;
+            appendNine = false;
         }
         return romanNumeral;
     }    
@@ -95,16 +97,13 @@ function populateRomanString(num:number,diff:number,keyForMap:number,paddingLett
     }else {
         numeral = stringGenerationLoop(loopNum,keyForMap)+paddingLetter;
     }*/
-    console.log('numeral:'+numeral);
     return numeral;
 
 }
 function stringGenerationLoop(times:number,lookupKey:number):string{
-    console.log('in loopfn:'+times+","+lookupKey);
     let returnStr = '';
     for(let i=0;i<times;i++){
         returnStr+=orderedLookupMap.get(lookupKey);
     }
-    console.log('str in loopfn:'+returnStr);
     return returnStr;
 }
