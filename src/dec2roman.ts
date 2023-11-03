@@ -19,6 +19,9 @@ export function convertDecToRoman(num: number): string | undefined {
   let pad: string | undefined = "";
   let romanNumeral: string | undefined = "";
 
+  if (num > 3000) throw new Error("Number has to be less than 3000");
+  if (!Number.isInteger(num)) throw new Error("Number has to be an integer");
+
   if (orderedLookupMap.has(num)) {
     //return the number from the map
     romanNumeral = orderedLookupMap.get(num);

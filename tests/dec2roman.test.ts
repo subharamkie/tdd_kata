@@ -24,3 +24,18 @@ describe("Test convert to roman function", () => {
     expect(convertDecToRoman(x)).toBe(result);
   });
 });
+describe("Checking wrong input to dec2Roman function", () => {
+  it("Should throw error for value > 3000", () => {
+    expect(() => convertDecToRoman(3214)).toThrow(
+      "Number has to be less than 3000"
+    );
+  });
+});
+
+describe("Checking float value input ", () => {
+  it("Should throw error for non integer values", () => {
+    expect(() => convertDecToRoman(3.14)).toThrow(
+      "Number has to be an integer"
+    );
+  });
+});
