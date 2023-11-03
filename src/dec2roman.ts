@@ -1,8 +1,10 @@
 import { lookup } from "dns";
 const orderedLookupMap = new Map<number, string>();
 orderedLookupMap.set(1000, "M");
+orderedLookupMap.set(900, "CM");
 orderedLookupMap.set(500, "D");
 orderedLookupMap.set(100, "C");
+orderedLookupMap.set(90, "XC");
 orderedLookupMap.set(50, "L");
 orderedLookupMap.set(10, "X");
 orderedLookupMap.set(5, "V");
@@ -35,7 +37,6 @@ export function convertDecToRoman(num: number): string | undefined {
         quotient = Math.floor(remainder / key);
         remainder = Math.floor(remainder % key);
         currentKeyToGetLetter = key;
-        console.log("q:" + quotient + ",r:" + remainder);
         pad = orderedLookupMap.get(closestHigherNum); // should never be undefined
         if (!pad) {
           pad = "";
@@ -78,8 +79,4 @@ function stringGenerationLoop(times: number, lookupKey: number): string {
     returnStr += orderedLookupMap.get(lookupKey);
   }
   return returnStr;
-}
-
-function multipleOfNine(num: number) {
-  //would be the case for 90,900
 }
