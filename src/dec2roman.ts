@@ -32,7 +32,7 @@ export function convertDecToRoman(num:number):string|undefined{
                 if(!pad){pad = '';}
                 console.log('quotient b4:'+quotient);
                 romanNumeral += populateRomanString(quotient,remainder,currentKeyToGetLetter,pad);
-                console.log(romanNumeral);
+                console.log(romanNumeral,+" pad: "+pad);
             }
             closestHigherNum = key;//store the closest higher number for numbers like 4,9
         };
@@ -76,10 +76,16 @@ export function convertDecToRoman(num:number):string|undefined{
 
 function populateRomanString(num:number,diff:number,keyForMap:number,paddingLetter:string):string{
     let numeral = '';
-    let loopNum = 0;
+    let loopNum = num;
     let prefix:boolean = false;
     let noPrefix:boolean = false;
-    
+    if(num>3){
+        loopNum = 5-num;
+        numeral = stringGenerationLoop(loopNum,keyForMap)+paddingLetter;
+    } else{
+        numeral = stringGenerationLoop(loopNum,keyForMap);
+    }
+    /*
     if(num > 3){
         loopNum = 5-num;
        // numeral = stringGenerationLoop(loopNum,num)+paddingLetter;
@@ -96,6 +102,7 @@ function populateRomanString(num:number,diff:number,keyForMap:number,paddingLett
         noPrefix = true;
         //numeral = stringGenerationLoop(loopNum,num);
     }
+
     if(prefix){
         console.log('prefix:'+prefix);
         numeral = paddingLetter+stringGenerationLoop(loopNum,keyForMap);
@@ -104,7 +111,7 @@ function populateRomanString(num:number,diff:number,keyForMap:number,paddingLett
         numeral = stringGenerationLoop(loopNum,keyForMap);
     }else {
         numeral = stringGenerationLoop(loopNum,keyForMap)+paddingLetter;
-    }
+    }*/
     console.log('numeral:'+numeral);
     return numeral;
 

@@ -10,7 +10,9 @@ describe("Test convert to roman function",()=>{
             [2,'II'],
             [3,'III'],
             [4,'IV'],
-            [6,'VI']
+            [6,'VI'],
+            [7,'VII'],
+            [8,'VIII'],
                     ]
     )("should return Roman numeral for %i", (x,result) =>{
         expect(convertDecToRoman(x)).toBe(result);
