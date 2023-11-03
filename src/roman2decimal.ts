@@ -14,11 +14,14 @@ export function convertRomanToDecimal(romanNum: string): number {
   let decimalNumber: number = 0;
   let currentValue: number = 0;
   let nextValue: number = 0;
+  let currentLetter: string = "";
 
   const stringArray = [...romanNum.toUpperCase()];
-  stringArray.forEach((char, index) => {
-    if (char in romanLookUpObj) {
-      currentValue = romanLookUpObj[char];
+  for (let index = 0; index < stringArray.length; index++) {
+    currentLetter = stringArray[index];
+    if (currentLetter in romanLookUpObj) {
+      console.log("decimal to start with:" + decimalNumber);
+      currentValue = romanLookUpObj[currentLetter];
       console.log("value from obj:" + currentValue);
       //keep track of next char to decide for IV,IX etc
       if (stringArray[index + 1]) {
@@ -28,13 +31,16 @@ export function convertRomanToDecimal(romanNum: string): number {
 
         if (nextValue > currentValue) {
           currentValue = nextValue - currentValue;
+          decimalNumber += currentValue;
           console.log("next value greater:" + currentValue);
+          index += 2;
+          continue;
         }
       }
-      //console.log("value from obj:" + currentValue);
       decimalNumber += currentValue;
+      console.log("value from obj:" + decimalNumber);
     }
-  });
+  }
 
   return decimalNumber;
 }
