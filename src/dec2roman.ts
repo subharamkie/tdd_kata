@@ -7,6 +7,9 @@ orderedLookupMap.set(50,'L');
 orderedLookupMap.set(10,'X');
 orderedLookupMap.set(5,'V');
 orderedLookupMap.set(1,'I');
+let appendNine:boolean = false;
+const APPEND_NINE = 'IX';
+    
 
 export function convertDecToRoman(num:number):string|undefined{
     let quotient:number = 0;
@@ -19,7 +22,12 @@ export function convertDecToRoman(num:number):string|undefined{
     if(orderedLookupMap.has(num)){
         romanNumeral= orderedLookupMap.get(num) ;
         return romanNumeral;
-    } else{
+    } else { 
+        //last digit not 9
+        if(Math.floor(num%10) === 9) {
+            num = num-9;
+            appendNine = true;
+        }
         remainder = num;
         //iterate through the object, divide by each one 
         for(const[key,value] of orderedLookupMap){
@@ -32,60 +40,35 @@ export function convertDecToRoman(num:number):string|undefined{
                 if(!pad){pad = '';}
                 console.log('quotient b4:'+quotient);
                 romanNumeral += populateRomanString(quotient,remainder,currentKeyToGetLetter,pad);
-                console.log(romanNumeral,+" pad: "+pad);
             }
             closestHigherNum = key;//store the closest higher number for numbers like 4,9
         };
-        
+        if(appendNine){
+            romanNumeral += APPEND_NINE;
+        }
         return romanNumeral;
-        /*
-
-        if( Math.floor(num/10) === 0){
-            quotient = Math.floor(num/5);
-            if( quotient === 0){
-                if(num > 3){
-                    quotient = 5 - num;
-                    pad = 'V';
-                }else{
-                    quotient = num;
-                }
-                romanNumeral = populateRomanString(quotient)+pad;
-                return romanNumeral;
-            }else{
-                //more than 5
-                remainder = Math.floor(num%5);
-                if(remainder > 3){
-                    pad = 'X';
-                    romanNumeral = populateRomanString(quotient)+pad;
-                
-                } else{
-                    pad = 'V';
-                    romanNumeral = pad+populateRomanString(remainder);
-                
-                }
-                return romanNumeral;
-
-            }
-        }else{
-
-        }*/
-    }
+    }    
     return '';
-    
 }
 
 function populateRomanString(num:number,diff:number,keyForMap:number,paddingLetter:string):string{
     let numeral = '';
     let loopNum = num;
-    let prefix:boolean = false;
     let noPrefix:boolean = false;
+    
     if(num>3){
         loopNum = 5-num;
         numeral = stringGenerationLoop(loopNum,keyForMap)+paddingLetter;
-    } else{
+    }else{
         numeral = stringGenerationLoop(loopNum,keyForMap);
     }
     /*
+    if(diff < 3){
+        numeral += paddingLetter;
+    }else{
+        numeral = paddingLetter+numeral;
+    }
+    
     if(num > 3){
         loopNum = 5-num;
        // numeral = stringGenerationLoop(loopNum,num)+paddingLetter;
