@@ -7,8 +7,6 @@ orderedLookupMap.set(50,'L');
 orderedLookupMap.set(10,'X');
 orderedLookupMap.set(5,'V');
 orderedLookupMap.set(1,'I');
-console.log(orderedLookupMap);
-
 
 export function convertDecToRoman(num:number):string|undefined{
     let quotient:number = 0;
@@ -22,24 +20,23 @@ export function convertDecToRoman(num:number):string|undefined{
         romanNumeral= orderedLookupMap.get(num) ;
         return romanNumeral;
     } else{
-        
+        remainder = num;
         //iterate through the object, divide by each one 
         for(const[key,value] of orderedLookupMap){
             //divide number by each key
-            if(num>=key){
-                quotient = Math.floor(num/key);
-                remainder = Math.floor(num%key);
+            if(remainder>=key){
+                quotient = Math.floor(remainder/key);
+                remainder = Math.floor(remainder%key);
                 currentKeyToGetLetter = key;
-                break;
+                pad = orderedLookupMap.get(closestHigherNum); // should never be undefined
+                if(!pad){pad = '';}
+                console.log('quotient b4:'+quotient);
+                romanNumeral += populateRomanString(quotient,remainder,currentKeyToGetLetter,pad);
+                console.log(romanNumeral);
             }
             closestHigherNum = key;//store the closest higher number for numbers like 4,9
         };
-        console.log("quot:"+quotient);
-        console.log("remainder:"+remainder);
-
-        pad = orderedLookupMap.get(closestHigherNum); // should never be undefined
-        if(!pad){pad = '';}
-        romanNumeral = populateRomanString(quotient,remainder,currentKeyToGetLetter,pad);
+        
         return romanNumeral;
         /*
 
@@ -83,12 +80,12 @@ function populateRomanString(num:number,diff:number,keyForMap:number,paddingLett
     let prefix:boolean = false;
     let noPrefix:boolean = false;
     
-    console.log('in populate,arguments:'+num+" "+diff+" "+" key:"+keyForMap+" "+paddingLetter);
     if(num > 3){
         loopNum = 5-num;
        // numeral = stringGenerationLoop(loopNum,num)+paddingLetter;
     }else if(diff > 0 && diff <= 3){
         loopNum = diff;
+        console.log('loopNum:'+loopNum);
         noPrefix = true;
         //numeral = stringGenerationLoop(loopNum,num);
     }else if(diff > 3){
@@ -108,12 +105,13 @@ function populateRomanString(num:number,diff:number,keyForMap:number,paddingLett
     }else {
         numeral = stringGenerationLoop(loopNum,keyForMap)+paddingLetter;
     }
+    console.log('numeral:'+numeral);
     return numeral;
 
 }
 function stringGenerationLoop(times:number,lookupKey:number):string{
+    console.log('in loopfn:'+times+","+lookupKey);
     let returnStr = '';
-    console.log('in loopfn:'+times+" ,key:"+lookupKey);
     for(let i=0;i<times;i++){
         returnStr+=orderedLookupMap.get(lookupKey);
     }
