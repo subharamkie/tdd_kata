@@ -11,9 +11,14 @@ export function convertRomanToDecimal(romanNum: string): number {
     CM: 900,
     M: 1000,
   };
-  let decimalNumber = 0;
-  if (romanNum in romanLookUpObj) {
-    decimalNumber = romanLookUpObj[romanNum];
-  }
+  let decimalNumber: number = 0;
+  const stringArray = [...romanNum.toUpperCase()];
+  stringArray.forEach((char, index) => {
+    if (char in romanLookUpObj) {
+      console.log("value from obj:" + romanLookUpObj[char]);
+      decimalNumber += romanLookUpObj[char];
+    }
+  });
+
   return decimalNumber;
 }
