@@ -37,3 +37,22 @@ describe("Calculate Bowling scores", () => {
     expect(calculateTotalScore(scoreArray)).toBe(150);
   });
 });
+describe("Calculate Bowling scores", () => {
+  it("return the calculated score", () => {
+    //Arrange
+    const scoreArray = [
+      [2, 7],
+      [6, 2],
+      [4, "/"],
+      [9, "/"],
+      [4, 5],
+      [9, "-"],
+      [6, 3],
+      [5, "/"],
+      [7, "/"],
+      [4, 5],
+    ];
+    //Act & assert
+    expect(calculateTotalScore(scoreArray)).toBe(117);
+  });
+});
