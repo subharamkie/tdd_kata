@@ -14,36 +14,41 @@ export function calculateTotalScore(inputMatrix: Matrix): number {
       if (value !== "-" && typeof value === "number") {
         if (spareOrStrike > 0) {
           totalScore += value * STRIKESPARE_MULTIPLIER;
+          console.log("totalsvore:" + totalScore + "value now:" + value);
           //if done adding then reset if not last score of next turn
           spareOrStrike--; //you add only the first score twice if spare,else second for strike
         } else {
           totalScore += value;
+          console.log("totalsvore:" + totalScore + "value now:" + value);
         }
         previousValue = value; //store to subtract if next is spare
       } else if (value === "/") {
         /*it's a spare, so need to add next roll twice and 10 for the current one.
         But spare can occur only on the second iteration of this loop, so need to subtract the previous score then add 10*/
         totalScore += 10 - previousValue;
+        console.log("totalsvore:" + totalScore + "value now:" + value);
         spareOrStrike = i + 1 < matrixLength ? 1 : 0; //if not the last turn,in which case you can check for i+1<length?
       } else if (value.toUpperCase() === "X") {
         //if previous score was strike,then add 2*10+10 for current turn,
         console.log("current value:" + value);
         console.log("current value of spareorstrike:" + spareOrStrike);
 
-        if (spareOrStrike === 2) {
+        if (spareOrStrike === 1) {
+          totalScore += STRIKESPARE_MULTIPLIER * 10;
+        } else if (spareOrStrike === 2) {
           totalScore += 10 + STRIKESPARE_MULTIPLIER * 10;
-          console.log("score with prev strike:" + totalScore);
-          spareOrStrike = i + 1 < matrixLength ? 2 : 0; // set it to 0 if it's last turn
-
-          //prev was strike & current is strike, so dont alter spareOrStrike unless it's last turn
         } else {
           totalScore += 10;
-          spareOrStrike = i + 1 < matrixLength ? 2 : 0; // set it to 0 if it's last turn
           console.log("first strike:" + totalScore);
         }
+        console.log("score with prev strike:" + totalScore);
+        spareOrStrike = i + 1 < matrixLength ? 2 : 0; // set it to 0 if it's last turn
+
+        //prev was strike & current is strike, so dont alter spareOrStrike unless it's last turn
       }
     });
   }
+  console.log("final score:" + totalScore);
   return totalScore;
 }
 function resetAddAheadNumber(currentIndex: number): void {}
